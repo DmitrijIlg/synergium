@@ -1,0 +1,38 @@
+<div class="main">
+	<div class="cont">
+		<%= form_for @text, url: {action: "save"}  do |f| %>
+    			<%= f.label :Top_3_words! %><br>
+    			<p >Įveskite tekstą, kad suskaičiuoti Top 3 pasikartojančius žodžius tekste.</p>
+    			<%= f.text_area :content %> <br>
+  				<%= f.submit "Skaičiuoti" %>  
+		<% end %>
+	</div>
+	
+	
+
+	<h2 class='rez'>Rezultatai</h2>
+
+	<%= link_to "Valyti rezultatus", destroy_path %>
+
+	<% @texts.each do |text| %> 
+		<div class="row"> 
+  			<div class="col-md-9">
+  				<h3>Jūsų įvestas tekstas</h3>
+  				<p class="content"><%= text.content %></p>
+  			</div>
+  			<div class="col-md-3">
+  				<h3>Top 3</h3>
+  				<% a = JSON.parse(text.top3.to_s) rescue {} %>
+  				<% b = 0 %>
+  				<% a.each do |k,v| %>
+  					<% b += 1%>
+  					<p class="top3">Nr.<%= b %>: "<%=  k %>" pasikartoja <%=  v %> kartus</p> 
+  				<% end %>
+  			</div>
+		</div> 
+	<% end %>
+
+
+
+</div>
+
